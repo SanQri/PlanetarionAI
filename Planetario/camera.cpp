@@ -25,10 +25,10 @@ QImage Camera::renderImageOfSize(int w, int h) {
 
     int cellSize = h / verticalWorldSize;
 
-    for (int x = leftCell; x <= rightCell; x++) {
-        int screenX = w / 2 - (x - position->x) * cellSize;
-        for (int y = topCell; y <= bottomCell; y++) {
-            int screenY = h / 2 - (y - position->y) * cellSize;
+    for (int x = leftCell - 1; x <= rightCell + 1; x++) {
+        int screenX = w / 2 + (x - position->x) * cellSize;
+        for (int y = topCell - 1; y <= bottomCell + 1; y++) {
+            int screenY = h / 2 + (y - position->y) * cellSize;
             CellType type = map->getTypeOfCellAt(x, y);
             QColor color = colorForCellType(type);
             for(int pixelX = screenX; pixelX < screenX + cellSize; pixelX++) {
