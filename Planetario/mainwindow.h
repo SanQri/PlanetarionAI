@@ -14,7 +14,7 @@ public:
     MainWindow();
     QImage image;
     QLabel *label;
-    QImage camImage;
+    QPixmap *camImage;
     QLabel *camLabel;
     QWidget *view;
     QSlider *xPosition;

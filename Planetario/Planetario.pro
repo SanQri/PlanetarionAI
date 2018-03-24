@@ -26,29 +26,45 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
     mainwindow.cpp \
     person.cpp \
-    specialization.cpp \
     diamonsquaregenerator.cpp \
     tribe.cpp \
-    fire.cpp \
-    pointobject.cpp \
     position.cpp \
     cell.cpp \
     map.cpp \
     camera.cpp \
-    renderer.cpp
+    renderer.cpp \
+    maptilemanager.cpp \
+    Specializations/specialization.cpp \
+    Specializations/woodcutter.cpp \
+    Objectives/bonfire.cpp \
+    Objectives/pointobject.cpp \
+    Objectives/treeobjective.cpp
 
 HEADERS  += \
     mainwindow.h \
     person.h \
-    specialization.h \
     diamonsquaregenerator.h \
     tribe.h \
-    fire.h \
-    pointobject.h \
     position.h \
     cell.h \
     map.h \
     camera.h \
-    renderer.h
+    renderer.h \
+    maptilemanager.h \
+    Specializations/specialization.h \
+    Specializations/woodcutter.h \
+    Objectives/bonfire.h \
+    Objectives/pointobject.h \
+    Objectives/treeobjective.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    MapTiles/darkGrass.png \
+    MapTiles/deepWater.png \
+    MapTiles/grass.png \
+    MapTiles/outOfMap.png \
+    MapTiles/sand.png \
+    MapTiles/stone.png \
+    MapTiles/water.png \
+    ObjectiveSprites/treeObjective.png

@@ -1,12 +1,12 @@
 #ifndef TRIBE_H
 #define TRIBE_H
 
-#include "fire.h"
+#include "Objectives/bonfire.h"
 
 class Tribe
 {
 public:
-    Fire *fire;
+    Bonfire *bonfire;
     Tribe();
 };
 

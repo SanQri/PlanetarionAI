@@ -34,7 +34,7 @@ inline int inRange(int x) {
 
 MainWindow::MainWindow() : QMainWindow()
 {
-    this->setGeometry(100, 100, 858, 758);
+    this->setGeometry(20, 20, 1600, 900);
 
     view = new QWidget(this);
     this->setCentralWidget(view);
@@ -54,6 +54,8 @@ MainWindow::MainWindow() : QMainWindow()
     map = new Map();
     map->generate();
     camera = new Camera(map, new Position(10.41, 20.76));
+
+    camImage = nullptr;
 
     xPosition = new QSlider(view);
     xPosition->setOrientation(Qt::Horizontal);
@@ -92,20 +94,25 @@ MainWindow::MainWindow() : QMainWindow()
 
 void MainWindow::redraw() {
 
-    camImage = camera->renderImageOfSize(SIZE_OF_MAP * 3, SIZE_OF_MAP * 2);
+    if (camImage != nullptr) {
+        delete camImage;
+        delete camLabel;
+    }
+    camImage = camera->renderImageOfSize(SIZE_OF_MAP * 5, SIZE_OF_MAP * 3.5);
     camLabel = new QLabel(view);
     camLabel->show();
-    camLabel->setGeometry(SIZE_OF_MAP, 100, SIZE_OF_MAP * 3, SIZE_OF_MAP * 2);
-    camLabel->setPixmap(QPixmap::fromImage(camImage));
+    camLabel->setGeometry(SIZE_OF_MAP, 50, SIZE_OF_MAP * 5, SIZE_OF_MAP * 3.5);
+    camLabel->setPixmap(*camImage);
 
-    for(int x = 0; x < SIZE_OF_MAP; x++) {
-        for(int y = 0; y < SIZE_OF_MAP; y++) {
-            image.setPixelColor(x, y, camera->colorForCellType(map->getTypeOfCellAt(x, y)));
-        }
-    }
+//    delete image;
+//    for(int x = 0; x < SIZE_OF_MAP; x++) {
+//        for(int y = 0; y < SIZE_OF_MAP; y++) {
+//            image.setPixelColor(x, y, camera->colorForCellType(map->getTypeOfCellAt(x, y)));
+//        }
+//    }
 
-    label = new QLabel(view);
-    label->show();
-    label->setGeometry(0, 0, SIZE_OF_MAP, SIZE_OF_MAP);
-    label->setPixmap(QPixmap::fromImage(image));
+//    label = new QLabel(view);
+//    label->show();
+//    label->setGeometry(0, 0, SIZE_OF_MAP, SIZE_OF_MAP);
+//    label->setPixmap(QPixmap::fromImage(image));
 }

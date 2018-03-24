@@ -9,7 +9,8 @@ enum CellType {
     Stones,
     Water,
     DeepWater,
-    BeyondMap
+    BeyondMap,
+    CountOfCellTypes
 
 };
 

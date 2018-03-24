@@ -7,7 +7,7 @@ class Renderer
 {
 public:
     Renderer();
-    virtual QImage renderImageOfSize(int w, int h) = 0;
+    virtual QPixmap *renderImageOfSize(int w, int h) = 0;
 };
 
 #endif // RENDERER_H

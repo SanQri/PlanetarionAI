@@ -2,6 +2,8 @@
 #include "diamonsquaregenerator.h"
 #include "random"
 #include "time.h"
+#include "Objectives/treeobjective.h"
+#include "Objectives/bonfire.h"
 
 Map::Map() {
     for (int i = 0; i < SIZE_OF_MAP; i++)
@@ -13,6 +15,7 @@ void Map::generate() {
     DiamonSquareGenerator *generator = new DiamonSquareGenerator();
     generator->generate();
     srand(time(NULL));
+    objectives.clear();
     for (int x = 0; x < SIZE_OF_MAP; x++) {
         for (int y = 0; y < SIZE_OF_MAP; y++) {
             float h = generator->height[x][y] + 0.2;
@@ -34,6 +37,21 @@ void Map::generate() {
                     cells[x][y]->setType(CellType::Stones);
                 }
             }
+            if (c > 180) {
+                int r = rand() % 1000;
+                if (r < 200) {
+                    TreeObjective *treeObjective = new TreeObjective();
+                    treeObjective->x = x;
+                    treeObjective->y = y;
+                    objectives.push_back(treeObjective);
+                }
+            }
+            if (c > 90 && c < 150) {
+                Bonfire *bonfire = new Bonfire();
+                bonfire->x = x;
+                bonfire->y = y;
+                objectives.push_back(bonfire);
+            }
         }
     }
 }
@@ -43,4 +61,16 @@ CellType Map::getTypeOfCellAt(int x, int y) {
         return cells[x][y]->getType();
     }
     return CellType::BeyondMap;
+}
+
+// To be optimized
+std::vector<PointObject *>Map::objectivesAtBounds(int x1, int y1, int x2, int y2) {
+    std::vector<PointObject *>result;
+    for (PointObject *objective: objectives) {
+        if (objective->x >= x1 && objective->x <= x2 &&
+            objective->y >= y1 && objective->y <= y2) {
+            result.push_back(objective);
+        }
+    }
+    return result;
 }

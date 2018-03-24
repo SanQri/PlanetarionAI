@@ -13,8 +13,12 @@ private:
     float verticalWorldSize;
     Map *map;
 public:
+    QPixmap tilesForScales[CellType::CountOfCellTypes][257];
+    bool tilesForScalesCalculated[CellType::CountOfCellTypes][257];
+    QPixmap getTileOfTypeAndCellSize(CellType cellType, int cellSize);
     QColor colorForCellType(CellType cellType);
-    QImage renderImageOfSize(int w, int h) override;
+    QPixmap pixmapForCellType(CellType cellType);
+    QPixmap *renderImageOfSize(int w, int h) override;
     Position *getPosition();
     void setPosition(float x, float y);
     void setPosition(Position *p);

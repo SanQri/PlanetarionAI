@@ -1,8 +1,8 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include "specialization.h"
-#include "pointobject.h"
+#include "Specializations/specialization.h"
+#include "Objectives/pointobject.h"
 
 class Person: public PointObject
 {
