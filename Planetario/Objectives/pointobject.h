@@ -2,12 +2,15 @@
 #define POINTOBJECT_H
 
 #include "QPixmap.h"
+#include "position.h"
 
 class PointObject
 {
+private:
+    Position *position;
 public:
-    float x;
-    float y;
+    Position *getPosition();
+    void setPosition(Position *position);
     virtual QPixmap *getPixmap();
     PointObject();
 };

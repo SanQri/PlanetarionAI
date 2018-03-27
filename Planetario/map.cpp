@@ -4,6 +4,7 @@
 #include "time.h"
 #include "Objectives/treeobjective.h"
 #include "Objectives/bonfire.h"
+#include "bounds.h"
 
 Map::Map() {
     for (int i = 0; i < SIZE_OF_MAP; i++)
@@ -41,15 +42,13 @@ void Map::generate() {
                 int r = rand() % 1000;
                 if (r < 200) {
                     TreeObjective *treeObjective = new TreeObjective();
-                    treeObjective->x = x;
-                    treeObjective->y = y;
+                    treeObjective->setPosition(new Position(x, y));
                     objectives.push_back(treeObjective);
                 }
             }
             if (c > 90 && c < 150) {
                 Bonfire *bonfire = new Bonfire();
-                bonfire->x = x;
-                bonfire->y = y;
+                bonfire->setPosition(new Position(x, y));
                 objectives.push_back(bonfire);
             }
         }
@@ -64,11 +63,13 @@ CellType Map::getTypeOfCellAt(int x, int y) {
 }
 
 // To be optimized
-std::vector<PointObject *>Map::objectivesAtBounds(int x1, int y1, int x2, int y2) {
+std::vector<PointObject *>Map:: objectivesAtBounds(int x1, int y1, int x2, int y2) {
     std::vector<PointObject *>result;
+
+    // WutFace
+    Bounds *bounds = new Bounds(y1 - 0.01, x2 + 1.01, y2 + 1.01, x1 - 0.01);
     for (PointObject *objective: objectives) {
-        if (objective->x >= x1 && objective->x <= x2 &&
-            objective->y >= y1 && objective->y <= y2) {
+        if (bounds->contains(objective->getPosition())) {
             result.push_back(objective);
         }
     }

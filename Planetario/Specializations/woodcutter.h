@@ -6,6 +6,7 @@
 class Woodcutter : public Specialization
 {
 public:
+    void work() override;
     Woodcutter();
 };
 

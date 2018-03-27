@@ -1,55 +1,19 @@
 #include "mainwindow.h"
 
 #include <QtWidgets>
+#include <QMouseEvent>
+#include <QTimer>
+
 #include "diamonsquaregenerator.h"
 #include "math.h"
 #include "camera.h"
 #include "position.h"
 
-QGraphicsScene* scene;
-QGraphicsView* graphicView;
-
-void MainWindow::redrawScene()
-{
-    scene->clear();
-}
-
-inline int getR(int x, int y) {
-    return (x + y * SIZE_OF_MAP) * 3;
-}
-inline int getG(int x, int y) {
-    return (x + y * SIZE_OF_MAP) * 3 + 1;
-}
-inline int getB(int x, int y) {
-    return (x + y * SIZE_OF_MAP) * 3 + 2;
-}
-
-inline int inRange(int x) {
-    if (x < 0)
-        return 0;
-    if (x > 255)
-        return 255;
-    return x;
-}
-
 MainWindow::MainWindow() : QMainWindow()
 {
     this->setGeometry(20, 20, 1600, 900);
 
-    view = new QWidget(this);
-    this->setCentralWidget(view);
-    image = QImage(SIZE_OF_MAP, SIZE_OF_MAP, QImage::Format_RGB32);
-    label = new QLabel(view);
-    label->show();
-    label->setGeometry(0, 0, SIZE_OF_MAP * 2, SIZE_OF_MAP * 2);
-
-    QPushButton *but = new QPushButton(view);
-    but->setGeometry(700,0,100,30);
-    but->show();
-    but->connect(but, &QPushButton::clicked, [this]() {
-        map->generate();
-        redraw();
-    });
+    camLabel = new QLabel(this);
 
     map = new Map();
     map->generate();
@@ -57,62 +21,54 @@ MainWindow::MainWindow() : QMainWindow()
 
     camImage = nullptr;
 
-    xPosition = new QSlider(view);
-    xPosition->setOrientation(Qt::Horizontal);
-    xPosition->show();
-    xPosition->setGeometry(32, SIZE_OF_MAP + 32, 200, 20);
-    xPosition->setRange(0, SIZE_OF_MAP * 100);
+    redrawScene();
 
-    yPosition = new QSlider(view);
-    yPosition->setOrientation(Qt::Horizontal);
-    yPosition->show();
-    yPosition->setGeometry(32, SIZE_OF_MAP + 72, 200, 20);
-    yPosition->setRange(0, SIZE_OF_MAP * 100);
-
-    xPosition->connect(xPosition, &QSlider::valueChanged, [this](int value) {
-        camera->setPosition(value / 100.0, camera->getPosition()->y);
-        redraw();
-    });
-
-    yPosition->connect(yPosition, &QSlider::valueChanged, [this](int value) {
-        camera->setPosition(camera->getPosition()->x, value / 100.0);
-        redraw();
-    });
+    QTimer *timer = new QTimer();
+    timer->setInterval(30);
+    connect(timer, SIGNAL(timeout()), this, SLOT(redrawScene()));
+    timer->start();
 
 
-    heightSlider = new QSlider(view);
-    heightSlider->setOrientation(Qt::Horizontal);
-    heightSlider->show();
-    heightSlider->setGeometry(32, SIZE_OF_MAP + 112, 200, 20);
-    heightSlider->setRange(100, 1000);
 
-    heightSlider->connect(heightSlider, &QSlider::valueChanged, [this](int value) {
-        camera->setVerticalSize(value / 10.0);
-        redraw();
-    });
+    mouseTrackingWidget = new MouseTrackingWidget(camLabel);
+    mouseTrackingWidget->setGeometry(0, 0, width(), height());
+    mouseTrackingWidget->show();
 }
 
-void MainWindow::redraw() {
-
+void MainWindow::redrawScene() {
     if (camImage != nullptr) {
         delete camImage;
         delete camLabel;
+//        delete mouseTrackingWidget;
     }
-    camImage = camera->renderImageOfSize(SIZE_OF_MAP * 5, SIZE_OF_MAP * 3.5);
-    camLabel = new QLabel(view);
-    camLabel->show();
-    camLabel->setGeometry(SIZE_OF_MAP, 50, SIZE_OF_MAP * 5, SIZE_OF_MAP * 3.5);
+    camImage = camera->renderImageOfSize(width(), height());
+    camLabel = new QLabel(this);
+    setCentralWidget(camLabel);
+    camLabel->setGeometry(0, 0, width(), height());
     camLabel->setPixmap(*camImage);
-
-//    delete image;
-//    for(int x = 0; x < SIZE_OF_MAP; x++) {
-//        for(int y = 0; y < SIZE_OF_MAP; y++) {
-//            image.setPixelColor(x, y, camera->colorForCellType(map->getTypeOfCellAt(x, y)));
-//        }
-//    }
-
-//    label = new QLabel(view);
-//    label->show();
-//    label->setGeometry(0, 0, SIZE_OF_MAP, SIZE_OF_MAP);
-//    label->setPixmap(QPixmap::fromImage(image));
+//    mouseTrackingWidget = new MouseTrackingWidget(camLabel);
+//    mouseTrackingWidget->setGeometry(0, 0, width(), height());
+//    mouseTrackingWidget->show();
 }
+
+void MainWindow::mouseMovedTo(float x, float y) {
+    float cameraSpeed = 0.02;
+    Position *cameraPosition = camera->getPosition();
+    if (x < 10) {
+        float newX = std::max(0.0f, cameraPosition->x - cameraSpeed);
+        camera->setPosition(new Position(newX, cameraPosition->y));
+    }
+    if (y < 10) {
+        float newY = std::max(0.0f, cameraPosition->y - cameraSpeed);
+        camera->setPosition(new Position(cameraPosition->x, newY));
+    }
+    if (x > width() - 10) {
+        float newX = std::min((float)SIZE_OF_MAP, cameraPosition->x + cameraSpeed);
+        camera->setPosition(new Position(newX, cameraPosition->y));
+    }
+    if (y < height() - 10) {
+        float newY = std::min((float)SIZE_OF_MAP, cameraPosition->y + cameraSpeed);
+        camera->setPosition(new Position(cameraPosition->x, newY));
+    }
+}
+

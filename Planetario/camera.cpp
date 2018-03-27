@@ -40,13 +40,13 @@ QPixmap *Camera::renderImageOfSize(int w, int h) {
             painter->drawPixmap(screenX, screenY, tilePixmap);
         }
     }
-
     std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
     for (PointObject *objective: objectivesToRender) {
         QPixmap *objectivePixmap = objective->getPixmap();
         if (objectivePixmap != nullptr) {
-            int screenX = w / 2 + (objective->x - position->x) * cellSize;
-            int screenY = h / 2 + (objective->y - position->y) * cellSize;
+            Position *objectivePosition = objective->getPosition();
+            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
+            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
             painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
         }
     }
@@ -81,6 +81,8 @@ QPixmap Camera::pixmapForCellType(CellType cellType) {
     case CellType::Stones:
         return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\stone.png");
     case CellType::BeyondMap:
+        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
+    case CellType::CountOfCellTypes:
         return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
     }
 }

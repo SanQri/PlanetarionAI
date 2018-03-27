@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     Specializations/woodcutter.cpp \
     Objectives/bonfire.cpp \
     Objectives/pointobject.cpp \
-    Objectives/treeobjective.cpp
+    Objectives/treeobjective.cpp \
+    bounds.cpp \
+    mousetrackingwidget.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -55,7 +57,9 @@ HEADERS  += \
     Specializations/woodcutter.h \
     Objectives/bonfire.h \
     Objectives/pointobject.h \
-    Objectives/treeobjective.h
+    Objectives/treeobjective.h \
+    bounds.h \
+    mousetrackingwidget.h
 
 FORMS    += mainwindow.ui
 

@@ -2,6 +2,7 @@
 #define SPECIALIZATION_H
 
 #include "person.h"
+class Person;
 
 class Specialization
 {

@@ -1,6 +1,5 @@
 #include "woodcutter.h"
 
-Woodcutter::Woodcutter()
-{
+void Woodcutter::work() {
 
 }

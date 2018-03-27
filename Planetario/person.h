@@ -4,6 +4,8 @@
 #include "Specializations/specialization.h"
 #include "Objectives/pointobject.h"
 
+class Specialization;
+
 class Person: public PointObject
 {
 private:
@@ -17,8 +19,19 @@ private:
 
 public:
     Person();
+    double getStamina();
+    double getFtigue();
+    double getStrength();
+    double getAgility();
+    double getIntelligence();
+
+    void setStamina(double value);
+    void setFatigue(double value);
+    void setStrength(double value);
+    void setAgility(double value);
+    void setIntelligence(double value);
+
     void desideWhatToDo();
-    void work();
 };
 
 #endif // PERSON_H

@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include "mousetrackingwidget.h"
 
 class Camera;
 class Map;
+class MouseTrackingWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -12,17 +14,13 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    QImage image;
-    QLabel *label;
     QPixmap *camImage;
     QLabel *camLabel;
-    QWidget *view;
-    QSlider *xPosition;
-    QSlider *yPosition;
-    QSlider *heightSlider;
     Camera *camera;
     Map *map;
+    MouseTrackingWidget *mouseTrackingWidget;
     void redraw();
+    void mouseMovedTo(float x, float y);
 
 private slots:
     void redrawScene();
