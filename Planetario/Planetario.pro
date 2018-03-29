@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     Objectives/pointobject.cpp \
     Objectives/treeobjective.cpp \
     bounds.cpp \
-    mousetrackingwidget.cpp
+    mousetrackingwidget.cpp \
+    timemanager.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -59,7 +60,9 @@ HEADERS  += \
     Objectives/pointobject.h \
     Objectives/treeobjective.h \
     bounds.h \
-    mousetrackingwidget.h
+    mousetrackingwidget.h \
+    changeable.h \
+    timemanager.h
 
 FORMS    += mainwindow.ui
 

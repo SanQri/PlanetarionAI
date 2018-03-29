@@ -8,7 +8,7 @@ MouseTrackingWidget::MouseTrackingWidget(QWidget *parent) : QWidget(parent)
 
 void MouseTrackingWidget::mouseMoveEvent(QMouseEvent *event) {
     if (window != nullptr) {
-        window->mouseMovedTo(event->globalX(), event->globalY());
+        window->mouseMovedTo(event->localPos().x(), event->localPos().y());
     }
 }
 

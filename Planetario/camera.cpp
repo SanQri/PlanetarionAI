@@ -2,6 +2,7 @@
 #include "math.h"
 #include "cell.h"
 #include "vector"
+#include <QTimer>
 
 Camera::Camera(Map *map, float x, float y) {
     Camera(map, new Position(x, y));
@@ -9,6 +10,7 @@ Camera::Camera(Map *map, float x, float y) {
 
 Camera::Camera(Map *map, Position *position) {
     this->position = position;
+    this->anchorPosition = position;
     this->map = map;
     verticalWorldSize = 30;
     for(int i = 0; i < CellType::CountOfCellTypes; i++) {
@@ -16,6 +18,11 @@ Camera::Camera(Map *map, Position *position) {
             tilesForScalesCalculated[i][j] = false;
         }
     }
+
+    QTimer *timer = new QTimer();
+    timer->setInterval(16);
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(moveToAnchor()));
+    timer->start();
 }
 
 QPixmap *Camera::renderImageOfSize(int w, int h) {
@@ -40,16 +47,16 @@ QPixmap *Camera::renderImageOfSize(int w, int h) {
             painter->drawPixmap(screenX, screenY, tilePixmap);
         }
     }
-    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
-    for (PointObject *objective: objectivesToRender) {
-        QPixmap *objectivePixmap = objective->getPixmap();
-        if (objectivePixmap != nullptr) {
-            Position *objectivePosition = objective->getPosition();
-            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
-            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
-            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
-        }
-    }
+//    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
+//    for (PointObject *objective: objectivesToRender) {
+//        QPixmap *objectivePixmap = objective->getPixmap();
+//        if (objectivePixmap != nullptr) {
+//            Position *objectivePosition = objective->getPosition();
+//            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
+//            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
+//            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
+//        }
+//    }
 
     painter->end();
 
@@ -117,6 +124,9 @@ void Camera::setPosition(Position *p) {
 Position *Camera::getPosition() {
     return position;
 }
+Position *Camera::getAnchorPosition() {
+    return anchorPosition;
+}
 
 void Camera::setVerticalSize(float size) {
     if (size < 10) {
@@ -129,4 +139,13 @@ void Camera::setVerticalSize(float size) {
 
 float Camera::getVerticalSize() {
     return verticalWorldSize;
+}
+
+void Camera::setAnchorPosition(Position *p) {
+    anchorPosition = p;
+}
+
+void Camera::updateWithTimer() {
+    Position *shift = new Position(anchorPosition->x - position->x, anchorPosition->y - position->y);
+    position = new Position(position->x + shift->x * 0.2, position->y + shift->y * 0.2);
 }

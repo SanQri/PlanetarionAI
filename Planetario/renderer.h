@@ -3,8 +3,10 @@
 
 #include "qimage.h"
 
-class Renderer
+class Renderer : public QObject
 {
+    Q_OBJECT
+
 public:
     Renderer();
     virtual QPixmap *renderImageOfSize(int w, int h) = 0;

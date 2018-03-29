@@ -8,8 +8,11 @@
 
 class Camera: public Renderer
 {
+    Q_OBJECT
+
 private:
     Position *position;
+    Position *anchorPosition;
     float verticalWorldSize;
     Map *map;
 public:
@@ -20,12 +23,18 @@ public:
     QPixmap pixmapForCellType(CellType cellType);
     QPixmap *renderImageOfSize(int w, int h) override;
     Position *getPosition();
+    Position *getAnchorPosition();
     void setPosition(float x, float y);
     void setPosition(Position *p);
+    void setAnchorPosition(Position *p);
     void setVerticalSize(float size);
+    void updateWithTimer();
     float getVerticalSize();
     Camera(Map *map, float x, float y);
     Camera(Map *map, Position *position);
+
+private slots:
+    void moveToAnchor();
 };
 
 #endif // CAMERA_H
