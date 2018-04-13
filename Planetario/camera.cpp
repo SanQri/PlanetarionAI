@@ -47,16 +47,16 @@ QPixmap *Camera::renderImageOfSize(int w, int h) {
             painter->drawPixmap(screenX, screenY, tilePixmap);
         }
     }
-//    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
-//    for (PointObject *objective: objectivesToRender) {
-//        QPixmap *objectivePixmap = objective->getPixmap();
-//        if (objectivePixmap != nullptr) {
-//            Position *objectivePosition = objective->getPosition();
-//            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
-//            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
-//            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
-//        }
-//    }
+    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
+    for (PointObject *objective: objectivesToRender) {
+        QPixmap *objectivePixmap = objective->getPixmap();
+        if (objectivePixmap != nullptr) {
+            Position *objectivePosition = objective->getPosition();
+            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
+            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
+            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
+        }
+    }
 
     painter->end();
 
@@ -89,9 +89,8 @@ QPixmap Camera::pixmapForCellType(CellType cellType) {
         return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\stone.png");
     case CellType::BeyondMap:
         return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
-    case CellType::CountOfCellTypes:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
     }
+    return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
 }
 
 QColor Camera::colorForCellType(CellType cellType) {
@@ -111,6 +110,7 @@ QColor Camera::colorForCellType(CellType cellType) {
     case CellType::BeyondMap:
         return QColor(20, 20, 20);
     }
+    return CellType::BeyondMap;
 }
 
 void Camera::setPosition(float x, float y) {
@@ -145,7 +145,7 @@ void Camera::setAnchorPosition(Position *p) {
     anchorPosition = p;
 }
 
-void Camera::updateWithTimer() {
+void Camera::updateWithTimer(QTimer *timer) {
     Position *shift = new Position(anchorPosition->x - position->x, anchorPosition->y - position->y);
     position = new Position(position->x + shift->x * 0.2, position->y + shift->y * 0.2);
 }

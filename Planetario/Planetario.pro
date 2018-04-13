@@ -35,13 +35,19 @@ SOURCES += main.cpp\
     renderer.cpp \
     maptilemanager.cpp \
     Specializations/specialization.cpp \
-    Specializations/woodcutter.cpp \
     Objectives/bonfire.cpp \
     Objectives/pointobject.cpp \
     Objectives/treeobjective.cpp \
     bounds.cpp \
     mousetrackingwidget.cpp \
-    timemanager.cpp
+    timemanager.cpp \
+    Specializations/foodgatherer.cpp \
+    Specializations/woodgatherer.cpp \
+    Specializations/mixedgatherer.cpp \
+    resource.cpp \
+    Resources/resource.cpp \
+    Resources/foodresource.cpp \
+    Resources/fruit.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -55,14 +61,20 @@ HEADERS  += \
     renderer.h \
     maptilemanager.h \
     Specializations/specialization.h \
-    Specializations/woodcutter.h \
     Objectives/bonfire.h \
     Objectives/pointobject.h \
     Objectives/treeobjective.h \
     bounds.h \
     mousetrackingwidget.h \
     changeable.h \
-    timemanager.h
+    timemanager.h \
+    Specializations/foodgatherer.h \
+    Specializations/woodgatherer.h \
+    Specializations/mixedgatherer.h \
+    resource.h \
+    Resources/resource.h \
+    Resources/foodresource.h \
+    Resources/fruit.h
 
 FORMS    += mainwindow.ui
 
@@ -74,4 +86,22 @@ DISTFILES += \
     MapTiles/sand.png \
     MapTiles/stone.png \
     MapTiles/water.png \
-    ObjectiveSprites/treeObjective.png
+    ObjectiveSprites/treeObjective.png \
+    ObjectiveSprites/BonfireFrames/0.gif \
+    ObjectiveSprites/BonfireFrames/1.gif \
+    ObjectiveSprites/BonfireFrames/10.gif \
+    ObjectiveSprites/BonfireFrames/2.gif \
+    ObjectiveSprites/BonfireFrames/3.gif \
+    ObjectiveSprites/BonfireFrames/4.gif \
+    ObjectiveSprites/BonfireFrames/5.gif \
+    ObjectiveSprites/BonfireFrames/6.gif \
+    ObjectiveSprites/BonfireFrames/7.gif \
+    ObjectiveSprites/BonfireFrames/8.gif \
+    ObjectiveSprites/BonfireFrames/9.gif \
+    ObjectiveSprites/8021744fc275101ed9a4b75ace41f168.gif \
+    ObjectiveSprites/bonfire.gif \
+    ObjectiveSprites/bonfire.png \
+    ObjectiveSprites/treeObjective2.png \
+    ObjectiveSprites/treeObjective3.png \
+    ObjectiveSprites/hunter.png \
+    ObjectiveSprites/gathererWood.png

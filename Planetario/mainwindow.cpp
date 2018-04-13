@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 
+#include "timemanager.h"
 #include "diamonsquaregenerator.h"
 #include "math.h"
 #include "camera.h"
@@ -21,12 +22,8 @@ MainWindow::MainWindow() : QMainWindow()
 
     camImage = nullptr;
 
-    redrawScene();
-
-    QTimer *timer = new QTimer();
-    timer->setInterval(18);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(redrawScene()));
-    timer->start();
+    TimeManager::shared()->add(this);
+    TimeManager::shared()->add(camera);
 
     mouseTrackingWidget = new MouseTrackingWidget(this);
     mouseTrackingWidget->setGeometry(0, 0, width(), height());
@@ -82,4 +79,8 @@ void MainWindow::mouseMovedTo(float x, float y) {
 
 void MainWindow::wheelEvent(QWheelEvent *event) {
     camera->setVerticalSize(camera->getVerticalSize() * (event->delta() < 0 ? 1.1 : 0.91));
+}
+
+void MainWindow::updateWithTimer(QTimer *timer) {
+    redrawScene();
 }

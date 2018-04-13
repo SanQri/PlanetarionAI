@@ -1,0 +1,22 @@
+#include "woodgatherer.h"
+
+WoodGatherer::WoodGatherer(Person *person) : Specialization(worker) {
+
+}
+
+void WoodGatherer::work() {
+
+}
+
+double WoodGatherer::getProductivityMultiplier() {
+    double commonProductivity = worker->getCommonProductivityMultiplier();
+
+//    double brightness = TimeManager::shared()->getBrightness();
+//    double brightnessMultiplier = std::pow(brightness, 1.4);
+
+    return commonProductivity;
+}
+
+QPixmap *WoodGatherer::getSprite() {
+    return new QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\ObjectiveSprites\\gathererWood.png");
+}

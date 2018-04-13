@@ -16,3 +16,7 @@ void PointObject::setPosition(Position *position) {
 Position *PointObject::getPosition() {
     return position;
 }
+
+void PointObject::updateWithTimer(QTimer *timer) {
+
+}

@@ -5,8 +5,9 @@
 #include "mainwindow.h"
 #include "renderer.h"
 #include "map.h"
+#include "changeable.h"
 
-class Camera: public Renderer
+class Camera: public Renderer, public Changeable
 {
     Q_OBJECT
 
@@ -28,13 +29,10 @@ public:
     void setPosition(Position *p);
     void setAnchorPosition(Position *p);
     void setVerticalSize(float size);
-    void updateWithTimer();
+    void updateWithTimer(QTimer *timer) override;
     float getVerticalSize();
     Camera(Map *map, float x, float y);
     Camera(Map *map, Position *position);
-
-private slots:
-    void moveToAnchor();
 };
 
 #endif // CAMERA_H
