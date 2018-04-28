@@ -7,28 +7,35 @@
 #include "Specializations/foodgatherer.h"
 #include "Specializations/mixedgatherer.h"
 #include "Specializations/woodgatherer.h"
+#include "Specializations/eater.h"
 
+class Eater;
+class FoodGatherer;
+class MixedGatherer;
+class WoodGatherer;
 
 Person::Person(Map *map) {
+    this->stats = new PersonStats();
+    this->transportationManager = new PersonTransportationManager(this);
     this->map = map;
-    agility = 2;
-    specialization = new FoodGatherer(this);
+    isDead = false;
+    stats->setAgility(2);
+    this->specialization = new FoodGatherer(this);
+    workState = WorkState::JustChanged;
 }
 
-void Person::desideWhatToDo() {
-    specialization->work();
+PersonStats *Person::getPersonStats() {
+    return stats;
+}
 
-    drowsiness += 1.0 / TICKS_PER_DAY;
-    starvation += 1.0 / TICKS_PER_DAY;
-    thurst += 1.0 / TICKS_PER_DAY;
-    // If person has not eaten for a 4 days or has not drunk for a 2 days, it dies
-    if (starvation > 4 || thurst > 2) {
-        // die
-    }
+PersonTransportationManager *Person::getTransportationManager() {
+    return transportationManager;
 }
 
 double Person::getCommonProductivityMultiplier() {
-    return getDrowsinessProductivityMultiplier() * getStarvationProductivityMultiplier();
+    double drowsiness = getDrowsinessProductivityMultiplier();
+    double starvation = getStarvationProductivityMultiplier();
+    return drowsiness * starvation;
 }
 
 double Person::getStarvationProductivityMultiplier() {
@@ -38,7 +45,7 @@ double Person::getStarvationProductivityMultiplier() {
     double maximalProductivityPoint = 0.6;
     double smoothness = 3.2;
 
-    return std::exp(-std::pow(starvation - maximalProductivityPoint, 2) / smoothness);
+    return std::exp(-std::pow(stats->getStarvation() - maximalProductivityPoint, 2) / smoothness);
 }
 
 double Person::getDrowsinessProductivityMultiplier() {
@@ -48,10 +55,10 @@ double Person::getDrowsinessProductivityMultiplier() {
     double durationOfCompleteCheerfulness = 0.6;
     double smoothness = 2;
 
-    if (drowsiness < durationOfCompleteCheerfulness) {
+    if (stats->getDrowsiness() < durationOfCompleteCheerfulness) {
         return 1;
     }
-    return std::exp(-std::pow(drowsiness - durationOfCompleteCheerfulness, 2) / smoothness);
+    return std::exp(-std::pow(stats->getDrowsiness() - durationOfCompleteCheerfulness, 2) / smoothness);
 
 }
 
@@ -60,136 +67,90 @@ void Person::moveToPoint(Position *p) {
 }
 
 void Person::updateWithTimer(QTimer *timer) {
+    updatePosition();
+    updateStats();
+    desideWhatToDo();
+}
+
+void Person::desideWhatToDo() {
+    Specialization *newSpecialization = nullptr;
+    if (stats->getStarvation() > 0.3 && transportationManager->hasFood()) {
+        newSpecialization = new Eater(this);
+    } else {
+        newSpecialization = new FoodGatherer(this);
+    }
+
+    if (specialization->getType() != newSpecialization->getType()) {
+        delete specialization;
+        specialization = newSpecialization;
+        workState = WorkState::JustChanged;
+    } else {
+        delete newSpecialization;
+    }
+
+    specialization->work();
+}
+
+void Person::updatePosition() {
+    if (targetPosition == nullptr) {
+        return;
+    }
+
     Position *velocity = new Position(targetPosition->x - position->x, targetPosition->y - position->y);
     double absoluteValueOfVelocity = std::sqrt(std::pow(velocity->x, 2) + std::pow(velocity->y, 2));
     if (absoluteValueOfVelocity < 0.5) {
         position = targetPosition;
     } else {
-        Position *velocityNormalized = new Position(velocity->x / absoluteValueOfVelocity * agility * 0.2,
-                                                    velocity->y / absoluteValueOfVelocity * agility * 0.2);
-        position = new Position(position->x + velocityNormalized->x, position->y + velocityNormalized->y);
+        double agility = stats->getAgility();
+        Position *velocityNormalized = new Position(velocity->x / absoluteValueOfVelocity * SECONDS_PER_TICK * 0.2,
+                                                    velocity->y / absoluteValueOfVelocity * SECONDS_PER_TICK * 0.2);
+
+        double absoluteValue = std::sqrt(std::pow(velocityNormalized->x, 2) + std::pow(velocityNormalized->y, 2));
+        if (absoluteValue > absoluteValueOfVelocity) {
+            position = targetPosition;
+        } else {
+            position = new Position(position->x + velocityNormalized->x, position->y + velocityNormalized->y);
+        }
     }
-    moveToNearestTree();
+}
+
+void Person::updateStats() {
+    stats->setDrowsiness(stats->getDrowsiness() + 1.0 / TICKS_PER_DAY);
+    stats->setStarvation(stats->getStarvation() + 1.0 / TICKS_PER_DAY);
+//    stats->setThurst(stats->getThurst() + 1.0 / TICKS_PER_DAY);
+    // If person has not eaten for 4 days or has not drunk for 2 days, it dies
+    if (stats->getStarvation() > 4 || stats->getThurst() > 2) {
+        TimeManager::shared()->remove(this);
+        isDead = true;
+    }
 }
 
 void Person::moveToNearestTree() {
     targetPosition = map->getNearestTreeFromStartingPoint(*position);
 }
 
+bool Person::atAnchorPoint() {
+    return atPoint(targetPosition);
+}
+
+bool Person::atPoint(Position *target) {
+    Position *vectorToAnchor = new Position(target->x - position->x, target->y - position->y);
+    double distance = std::sqrt(std::pow(vectorToAnchor->x, 2) + std::pow(vectorToAnchor->y, 2));
+    return distance < 0.5;
+}
+
 QPixmap *Person::getPixmap() {
+    if (isDead) {
+        return new QPixmap(":/ObjectiveSprites/rip.png");
+    }
+    return new QPixmap(":/ObjectiveSprites/rip.png");
     return specialization->getSprite();
 }
 
-// MARK: Getters and setters
-
-double Person::getStamina() {
-    return stamina;
-}
-
-double Person::getFtigue() {
-    return fatigue;
-}
-
-double Person::getStrength() {
-    return strength;
-}
-
-double Person::getAgility() {
-    return agility;
-}
-
-double Person::getIntelligence() {
-    return intelligence;
-}
-
-double Person::getAttentiveness() {
-    return attentiveness;
-}
-
-double Person::getStarvation() {
-    return starvation;
-}
-
-double Person::getDrowsiness() {
-    return drowsiness;
-}
-
-double Person::getThurst() {
-    return thurst;
-}
-
-double Person::getFoodGatheringExp() {
-    return foodGatheringExp;
-}
-
-double Person::getWoodGatheringExp() {
-    return woodGatheringExp;
-}
-
-double Person::getFishingExp() {
-    return fishingExp;
-}
-
-double Person::getHuntingExp() {
-    return huntingExp;
-}
-
-double Person::getBonfireExp() {
-    return bonfireExp;
-}
-
-void Person::setStamina(double value) {
-    stamina = value;
-}
-
-void Person::setFatigue(double value) {
-    fatigue = value;
-}
-
-void Person::setStrength(double value) {
-    strength = value;
-}
-
-void Person::setAgility(double value) {
-    agility = value;
-}
-
-void Person::setIntelligence(double value) {
-    intelligence = value;
-}
-
-void Person::setAttentiveness(double value) {
-    attentiveness = value;
-}
-
-void Person::setStarvation(double value) {
-    starvation = value;
-}
-
-void Person::setDrowsiness(double value) {
-    drowsiness = value;
-}
-
-void Person::setThurst(double value) {
-    thurst = value;
-}
-
-void Person::setFoodGatheringExp(double value) {
-    foodGatheringExp = value;
-}
-
-void Person::setWoodGatheringExp(double value) {
-    woodGatheringExp = value;
-}
-
-void Person::setFishingExp(double value) {
-    fishingExp = value;
-}
-
-void Person::setHuntingExp(double value) {
-    huntingExp = value;
-}
-
-void Person::setBonfireExp(double value) {
-    bonfireExp = value;
+void Person::consumeFoodResource(FoodResource *foodResource) {
+    double newStarvation = stats->getStarvation() - foodResource->getCaloricity() / 2000.0;
+    if (newStarvation < 0) {
+        newStarvation = 0;
+    }
+    stats->setStarvation(newStarvation);
 }

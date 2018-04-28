@@ -9,6 +9,7 @@ public:
     MixedGatherer(Person *worker);
     void work() override;
     QPixmap *getSprite() override;
+    SpecializationType getType() override;
 };
 
 #endif // MIXEDGATHERER_H

@@ -1,7 +1,7 @@
 #ifndef DIAMONSQUAREGENERATOR_H
 #define DIAMONSQUAREGENERATOR_H
 
-const int SIZE_OF_MAP = 257;
+const int SIZE_OF_MAP = 129;
 
 class DiamonSquareGenerator
 {

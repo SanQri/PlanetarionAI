@@ -7,6 +7,7 @@ class Fruit : public FoodResource
 {
 public:
     Fruit(double weight, double volume, double caloricity);
+    Fruit(double weight);
 };
 
 #endif // FRUIT_H

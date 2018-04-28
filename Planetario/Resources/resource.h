@@ -10,7 +10,10 @@ protected:
 public:
     double getMass();
     double getVolume();
-    Resource();
+
+    virtual bool canBeUsed() = 0;
+
+    Resource(double mass, double volume);
 };
 
 #endif // RESOURCE_H

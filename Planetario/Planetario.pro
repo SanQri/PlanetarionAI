@@ -44,10 +44,16 @@ SOURCES += main.cpp\
     Specializations/foodgatherer.cpp \
     Specializations/woodgatherer.cpp \
     Specializations/mixedgatherer.cpp \
-    resource.cpp \
     Resources/resource.cpp \
     Resources/foodresource.cpp \
-    Resources/fruit.cpp
+    Resources/fruit.cpp \
+    personstats.cpp \
+    persontransportationmanager.cpp \
+    timestamp.cpp \
+    task.cpp \
+    personmovementmanager.cpp \
+    Specializations/eater.cpp \
+    Resources/waterresource.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -71,37 +77,21 @@ HEADERS  += \
     Specializations/foodgatherer.h \
     Specializations/woodgatherer.h \
     Specializations/mixedgatherer.h \
-    resource.h \
     Resources/resource.h \
     Resources/foodresource.h \
-    Resources/fruit.h
+    Resources/fruit.h \
+    personstats.h \
+    persontransportationmanager.h \
+    timestamp.h \
+    task.h \
+    personmovementmanager.h \
+    Specializations/eater.h \
+    Resources/waterresource.h
 
 FORMS    += mainwindow.ui
 
+RESOURCES += \
+    resources.qrc
+
 DISTFILES += \
-    MapTiles/darkGrass.png \
-    MapTiles/deepWater.png \
-    MapTiles/grass.png \
-    MapTiles/outOfMap.png \
-    MapTiles/sand.png \
-    MapTiles/stone.png \
-    MapTiles/water.png \
-    ObjectiveSprites/treeObjective.png \
-    ObjectiveSprites/BonfireFrames/0.gif \
-    ObjectiveSprites/BonfireFrames/1.gif \
-    ObjectiveSprites/BonfireFrames/10.gif \
-    ObjectiveSprites/BonfireFrames/2.gif \
-    ObjectiveSprites/BonfireFrames/3.gif \
-    ObjectiveSprites/BonfireFrames/4.gif \
-    ObjectiveSprites/BonfireFrames/5.gif \
-    ObjectiveSprites/BonfireFrames/6.gif \
-    ObjectiveSprites/BonfireFrames/7.gif \
-    ObjectiveSprites/BonfireFrames/8.gif \
-    ObjectiveSprites/BonfireFrames/9.gif \
-    ObjectiveSprites/8021744fc275101ed9a4b75ace41f168.gif \
-    ObjectiveSprites/bonfire.gif \
-    ObjectiveSprites/bonfire.png \
-    ObjectiveSprites/treeObjective2.png \
-    ObjectiveSprites/treeObjective3.png \
-    ObjectiveSprites/hunter.png \
-    ObjectiveSprites/gathererWood.png
+    Notes.txt

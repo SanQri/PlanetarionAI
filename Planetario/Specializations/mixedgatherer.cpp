@@ -9,6 +9,9 @@ void MixedGatherer::work() {
 }
 
 QPixmap *MixedGatherer::getSprite() {
-    return new QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\ObjectiveSprites\\gathererMixed.png");
+    return new QPixmap(":/ObjectiveSprites/gathererMixed.png");
 }
 
+SpecializationType MixedGatherer::getType() {
+    return SpecializationType::MixedGatherer;
+}

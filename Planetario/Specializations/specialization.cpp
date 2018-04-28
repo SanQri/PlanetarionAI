@@ -12,3 +12,7 @@ double Specialization::getProductivityByExp(double exp) {
 void Specialization::readyToWork() {
 
 }
+
+SpecializationType Specialization::getType() {
+    return SpecializationType::FoodGatherer;
+}

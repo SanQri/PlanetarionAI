@@ -5,7 +5,9 @@
 TimeManager::TimeManager() {
     timer = new QTimer();
 
-    timer->setInterval(20);
+    timer->setInterval(18);
+    day = 0;
+    dayTime = 0;
     QObject::connect( timer, SIGNAL(timeout()), this, SLOT(update()) );
     timer->start();
 }
@@ -24,7 +26,7 @@ void TimeManager::add(Changeable *changableObject) {
 }
 
 void TimeManager::remove(Changeable *changableObject) {
-    changables.erase(changableObject);
+    unsubs.insert(changableObject);
 }
 
 void TimeManager::update() {
@@ -35,6 +37,10 @@ void TimeManager::update() {
         day++;
         dayTime = 0;
     }
+    for (Changeable *unsub : unsubs) {
+        changables.erase(unsub);
+    }
+    unsubs.clear();
     
     for (Changeable *changable : changables) {
         changable->updateWithTimer(timer);
@@ -43,6 +49,10 @@ void TimeManager::update() {
 
 double TimeManager::getDayTime() {
     return dayTime;
+}
+
+int TimeManager::getDay() {
+    return day;
 }
 
 double TimeManager::getBrightness() {

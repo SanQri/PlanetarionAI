@@ -5,10 +5,13 @@
 
 class WoodGatherer : public Specialization
 {
+private:
+    double getProductivityMultiplier();
 public:
     WoodGatherer(Person *person);
     void work() override;
     QPixmap *getSprite() override;
+    SpecializationType getType() override;
 };
 
 #endif // WOODGATHERER_H

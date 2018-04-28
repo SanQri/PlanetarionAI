@@ -18,11 +18,6 @@ Camera::Camera(Map *map, Position *position) {
             tilesForScalesCalculated[i][j] = false;
         }
     }
-
-    QTimer *timer = new QTimer();
-    timer->setInterval(16);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(moveToAnchor()));
-    timer->start();
 }
 
 QPixmap *Camera::renderImageOfSize(int w, int h) {
@@ -76,21 +71,21 @@ QPixmap Camera::getTileOfTypeAndCellSize(CellType cellType, int cellSize) {
 QPixmap Camera::pixmapForCellType(CellType cellType) {
     switch (cellType) {
     case CellType::DarkGrass:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\darkGrass.png");
+        return QPixmap(":/MapTiles/darkGrass.png");
     case CellType::Grass:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\grass.png");
+        return QPixmap(":/MapTiles/grass.png");
     case CellType::Sand:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\sand.png");
+        return QPixmap(":/MapTiles/sand.png");
     case CellType::Water:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\water.png");
+        return QPixmap(":/MapTiles/water.png");
     case CellType::DeepWater:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\deepWater.png");
+        return QPixmap(":/MapTiles/deepWater.png");
     case CellType::Stones:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\stone.png");
+        return QPixmap(":/MapTiles/stone.png");
     case CellType::BeyondMap:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
+        return QPixmap(":/MapTiles/outOfMap.png");
     }
-    return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
+    return QPixmap(":/MapTiles/outOfMap.png");
 }
 
 QColor Camera::colorForCellType(CellType cellType) {

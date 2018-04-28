@@ -27,7 +27,6 @@ void Map::generate() {
     int w = 0;
     int s = 0;
     int g = 0;
-    int rofl = 0;
 
     while (w < 1000 || s < 1000 || g < 1000) {
 
@@ -76,12 +75,11 @@ void Map::generate() {
                 }
             }
         }
-        rofl++;
     }
 
 
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 30; i++) {
         Person *person = new Person(this);
         int x = rand() % SIZE_OF_MAP;
         int y = rand() % SIZE_OF_MAP;

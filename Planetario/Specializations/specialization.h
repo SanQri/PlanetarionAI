@@ -6,6 +6,13 @@
 #include "person.h"
 class Person;
 
+enum SpecializationType {
+    WoodGatherer,
+    MixedGatherer,
+    FoodGatherer,
+    Eater
+};
+
 class Specialization
 {
 protected:
@@ -16,6 +23,7 @@ public:
     virtual void work() = 0;
     virtual QPixmap *getSprite() = 0;
     virtual void readyToWork();
+    virtual SpecializationType getType();
 };
 
 #endif // SPECIALIZATION_H

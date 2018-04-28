@@ -1,12 +1,30 @@
 #include "foodgatherer.h"
 #include "timemanager.h"
+#include "Resources/fruit.h"
 
 FoodGatherer::FoodGatherer(Person *worker) : Specialization(worker) {
 
 }
 
 void FoodGatherer::work() {
-    worker->moveToNearestTree();
+    switch (worker->workState) {
+    case WorkState::JustChanged:
+        worker->moveToNearestTree();
+        worker->workState = WorkState::Moving;
+        break;
+    case WorkState::Moving:
+        if (worker->atAnchorPoint()) {
+            worker->workState = WorkState::Working;
+            work();
+        }
+        break;
+    case WorkState::Working:
+        PersonTransportationManager *bag = worker->getTransportationManager();
+        double productivity = getProductivityMultiplier();
+        Fruit *fruit = new Fruit(productivity * 100);
+        bag->take(fruit);
+        break;
+    }
 }
 
 double FoodGatherer::getProductivityMultiplier() {
@@ -19,5 +37,9 @@ double FoodGatherer::getProductivityMultiplier() {
 }
 
 QPixmap *FoodGatherer::getSprite() {
-    return new QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\ObjectiveSprites\\gathererFood.png");
+    return new QPixmap(":/ObjectiveSprites/gathererFood.png");
+}
+
+SpecializationType FoodGatherer::getType() {
+    return SpecializationType::FoodGatherer;
 }
