@@ -14,5 +14,5 @@ void Specialization::readyToWork() {
 }
 
 SpecializationType Specialization::getType() {
-    return SpecializationType::FoodGatherer;
+    return SpecializationType::FoodGathererType;
 }

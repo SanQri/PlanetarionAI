@@ -143,7 +143,6 @@ QPixmap *Person::getPixmap() {
     if (isDead) {
         return new QPixmap(":/ObjectiveSprites/rip.png");
     }
-    return new QPixmap(":/ObjectiveSprites/rip.png");
     return specialization->getSprite();
 }
 

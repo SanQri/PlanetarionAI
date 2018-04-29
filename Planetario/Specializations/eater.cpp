@@ -13,5 +13,5 @@ QPixmap *Eater::getSprite() {
 }
 
 SpecializationType Eater::getType() {
-    return SpecializationType::Eater;
+    return SpecializationType::EaterType;
 }

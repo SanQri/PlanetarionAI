@@ -124,8 +124,8 @@ Position *Camera::getAnchorPosition() {
 }
 
 void Camera::setVerticalSize(float size) {
-    if (size < 10) {
-        size = 10;
+    if (size < 5) {
+        size = 5;
     } else if (size > 100) {
         size = 100;
     }

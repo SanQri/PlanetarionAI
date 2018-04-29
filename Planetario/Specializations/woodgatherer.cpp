@@ -34,5 +34,5 @@ QPixmap *WoodGatherer::getSprite() {
 }
 
 SpecializationType WoodGatherer::getType() {
-    return SpecializationType::WoodGatherer;
+    return SpecializationType::WoodGathererType;
 }

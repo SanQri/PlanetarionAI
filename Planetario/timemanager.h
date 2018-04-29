@@ -7,8 +7,8 @@
 
 #include "changeable.h"
 
-const int TICKS_PER_DAY = 96;
-const double SECONDS_PER_TICK = 900.0;
+const int TICKS_PER_DAY = 240;
+const double SECONDS_PER_TICK = 360.0;
 
 class TimeManager : public QObject
 {

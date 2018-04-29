@@ -13,5 +13,5 @@ QPixmap *MixedGatherer::getSprite() {
 }
 
 SpecializationType MixedGatherer::getType() {
-    return SpecializationType::MixedGatherer;
+    return SpecializationType::MixedGathererType;
 }

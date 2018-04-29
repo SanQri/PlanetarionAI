@@ -7,10 +7,10 @@
 class Person;
 
 enum SpecializationType {
-    WoodGatherer,
-    MixedGatherer,
-    FoodGatherer,
-    Eater
+    WoodGathererType,
+    MixedGathererType,
+    FoodGathererType,
+    EaterType
 };
 
 class Specialization

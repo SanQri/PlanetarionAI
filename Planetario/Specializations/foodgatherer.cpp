@@ -41,5 +41,5 @@ QPixmap *FoodGatherer::getSprite() {
 }
 
 SpecializationType FoodGatherer::getType() {
-    return SpecializationType::FoodGatherer;
+    return SpecializationType::FoodGathererType;
 }
