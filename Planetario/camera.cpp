@@ -18,11 +18,6 @@ Camera::Camera(Map *map, Position *position) {
             tilesForScalesCalculated[i][j] = false;
         }
     }
-
-    QTimer *timer = new QTimer();
-    timer->setInterval(16);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(moveToAnchor()));
-    timer->start();
 }
 
 QPixmap *Camera::renderImageOfSize(int w, int h) {
@@ -47,16 +42,16 @@ QPixmap *Camera::renderImageOfSize(int w, int h) {
             painter->drawPixmap(screenX, screenY, tilePixmap);
         }
     }
-//    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
-//    for (PointObject *objective: objectivesToRender) {
-//        QPixmap *objectivePixmap = objective->getPixmap();
-//        if (objectivePixmap != nullptr) {
-//            Position *objectivePosition = objective->getPosition();
-//            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
-//            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
-//            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
-//        }
-//    }
+    std::vector<PointObject *> objectivesToRender = map->objectivesAtBounds(leftCell, topCell, rightCell, bottomCell);
+    for (PointObject *objective: objectivesToRender) {
+        QPixmap *objectivePixmap = objective->getPixmap();
+        if (objectivePixmap != nullptr) {
+            Position *objectivePosition = objective->getPosition();
+            int screenX = w / 2 + (objectivePosition->x - position->x) * cellSize;
+            int screenY = h / 2 + (objectivePosition->y - position->y) * cellSize;
+            painter->drawPixmap(screenX, screenY, cellSize, cellSize, *objectivePixmap);
+        }
+    }
 
     painter->end();
 
@@ -76,22 +71,21 @@ QPixmap Camera::getTileOfTypeAndCellSize(CellType cellType, int cellSize) {
 QPixmap Camera::pixmapForCellType(CellType cellType) {
     switch (cellType) {
     case CellType::DarkGrass:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\darkGrass.png");
+        return QPixmap(":/MapTiles/darkGrass.png");
     case CellType::Grass:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\grass.png");
+        return QPixmap(":/MapTiles/grass.png");
     case CellType::Sand:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\sand.png");
+        return QPixmap(":/MapTiles/sand.png");
     case CellType::Water:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\water.png");
+        return QPixmap(":/MapTiles/water.png");
     case CellType::DeepWater:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\deepWater.png");
+        return QPixmap(":/MapTiles/deepWater.png");
     case CellType::Stones:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\stone.png");
+        return QPixmap(":/MapTiles/stone.png");
     case CellType::BeyondMap:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
-    case CellType::CountOfCellTypes:
-        return QPixmap("C:\\Users\\SanQri\\Documents\\PlanetarioAI\\Planetario\\MapTiles\\outOfMap.png");
+        return QPixmap(":/MapTiles/outOfMap.png");
     }
+    return QPixmap(":/MapTiles/outOfMap.png");
 }
 
 QColor Camera::colorForCellType(CellType cellType) {
@@ -111,6 +105,7 @@ QColor Camera::colorForCellType(CellType cellType) {
     case CellType::BeyondMap:
         return QColor(20, 20, 20);
     }
+    return CellType::BeyondMap;
 }
 
 void Camera::setPosition(float x, float y) {
@@ -129,8 +124,8 @@ Position *Camera::getAnchorPosition() {
 }
 
 void Camera::setVerticalSize(float size) {
-    if (size < 10) {
-        size = 10;
+    if (size < 5) {
+        size = 5;
     } else if (size > 100) {
         size = 100;
     }
@@ -145,7 +140,7 @@ void Camera::setAnchorPosition(Position *p) {
     anchorPosition = p;
 }
 
-void Camera::updateWithTimer() {
+void Camera::updateWithTimer(QTimer *timer) {
     Position *shift = new Position(anchorPosition->x - position->x, anchorPosition->y - position->y);
     position = new Position(position->x + shift->x * 0.2, position->y + shift->y * 0.2);
 }

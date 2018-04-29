@@ -1,37 +1,62 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include "Specializations/specialization.h"
-#include "Objectives/pointobject.h"
+#include <QPixmap>
 
+#include "Specializations/specialization.h"
+
+#include "Resources/foodresource.h"
+
+#include "Objectives/pointobject.h"
+#include "map.h"
+#include "personstats.h"
+#include "persontransportationmanager.h"
+
+class PersonTransportationManager;
 class Specialization;
+class Map;
+
+enum WorkState { JustChanged, Moving, Working };
 
 class Person: public PointObject
 {
 private:
-    double stamina;
-    double fatigue;
-    double strength;
-    double agility;
-    double intelligence;
+    bool isDead;
+
+    PersonStats *stats;
+    PersonTransportationManager *transportationManager;
+
+    double getStarvationProductivityMultiplier();
+    double getDrowsinessProductivityMultiplier();
+
+    Position *targetPosition;
+
     Specialization *specialization;
-    // cutting, firing, cooking, collecting, fishing, hunting, crafting, raiding(???)
+    Map *map;
+
+    void updatePosition();
+    void updateStats();
+
+    bool atPoint(Position *target);
 
 public:
-    Person();
-    double getStamina();
-    double getFtigue();
-    double getStrength();
-    double getAgility();
-    double getIntelligence();
-
-    void setStamina(double value);
-    void setFatigue(double value);
-    void setStrength(double value);
-    void setAgility(double value);
-    void setIntelligence(double value);
-
+    PersonStats *getPersonStats();
+    PersonTransportationManager *getTransportationManager();
+    Person(Map *map);
+    double getCommonProductivityMultiplier();
+    void moveToPoint(Position *p);
     void desideWhatToDo();
+    void updateWithTimer(QTimer *timer) override;
+    QPixmap *getPixmap() override;
+
+    WorkState workState;
+
+    void moveToNearestTree();
+    bool atAnchorPoint();
+
+    void consumeFoodResource(FoodResource *foodResource);
+
+    // MARK: Getters and Setters
 };
 
 #endif // PERSON_H

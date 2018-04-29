@@ -3,15 +3,17 @@
 
 #include "QPixmap.h"
 #include "position.h"
+#include "changeable.h"
 
-class PointObject
+class PointObject : public Changeable
 {
-private:
+protected:
     Position *position;
 public:
     Position *getPosition();
     void setPosition(Position *position);
     virtual QPixmap *getPixmap();
+    virtual void updateWithTimer(QTimer *timer) override;
     PointObject();
 };
 

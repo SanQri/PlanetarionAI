@@ -35,13 +35,25 @@ SOURCES += main.cpp\
     renderer.cpp \
     maptilemanager.cpp \
     Specializations/specialization.cpp \
-    Specializations/woodcutter.cpp \
     Objectives/bonfire.cpp \
     Objectives/pointobject.cpp \
     Objectives/treeobjective.cpp \
     bounds.cpp \
     mousetrackingwidget.cpp \
-    timemanager.cpp
+    timemanager.cpp \
+    Specializations/foodgatherer.cpp \
+    Specializations/woodgatherer.cpp \
+    Specializations/mixedgatherer.cpp \
+    Resources/resource.cpp \
+    Resources/foodresource.cpp \
+    Resources/fruit.cpp \
+    personstats.cpp \
+    persontransportationmanager.cpp \
+    timestamp.cpp \
+    task.cpp \
+    personmovementmanager.cpp \
+    Specializations/eater.cpp \
+    Resources/waterresource.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -55,23 +67,31 @@ HEADERS  += \
     renderer.h \
     maptilemanager.h \
     Specializations/specialization.h \
-    Specializations/woodcutter.h \
     Objectives/bonfire.h \
     Objectives/pointobject.h \
     Objectives/treeobjective.h \
     bounds.h \
     mousetrackingwidget.h \
     changeable.h \
-    timemanager.h
+    timemanager.h \
+    Specializations/foodgatherer.h \
+    Specializations/woodgatherer.h \
+    Specializations/mixedgatherer.h \
+    Resources/resource.h \
+    Resources/foodresource.h \
+    Resources/fruit.h \
+    personstats.h \
+    persontransportationmanager.h \
+    timestamp.h \
+    task.h \
+    personmovementmanager.h \
+    Specializations/eater.h \
+    Resources/waterresource.h
 
 FORMS    += mainwindow.ui
 
+RESOURCES += \
+    resources.qrc
+
 DISTFILES += \
-    MapTiles/darkGrass.png \
-    MapTiles/deepWater.png \
-    MapTiles/grass.png \
-    MapTiles/outOfMap.png \
-    MapTiles/sand.png \
-    MapTiles/stone.png \
-    MapTiles/water.png \
-    ObjectiveSprites/treeObjective.png
+    Notes.txt

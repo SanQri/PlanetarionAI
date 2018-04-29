@@ -3,12 +3,13 @@
 
 #include <QtWidgets>
 #include "mousetrackingwidget.h"
+#include "changeable.h"
 
 class Camera;
 class Map;
 class MouseTrackingWidget;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public Changeable
 {
     Q_OBJECT
 private:
@@ -24,11 +25,8 @@ public:
     MouseTrackingWidget *mouseTrackingWidget;
     void redraw();
     void mouseMovedTo(float x, float y);
-
-
+    void updateWithTimer(QTimer *timer) override;
     void wheelEvent(QWheelEvent *event) override;
-
-private slots:
     void redrawScene();
 
 };

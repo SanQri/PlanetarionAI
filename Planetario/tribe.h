@@ -2,11 +2,12 @@
 #define TRIBE_H
 
 #include "Objectives/bonfire.h"
+#include "person.h"
 
 class Tribe
 {
 public:
-    Bonfire *bonfire;
+    std::vector<Person *> people;
     Tribe();
 };
 

@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ObjectiveSprites/bonfire.gif</file>
+        <file>ObjectiveSprites/bonfire.png</file>
+        <file>ObjectiveSprites/gathererFood.png</file>
+        <file>ObjectiveSprites/gathererMixed.png</file>
+        <file>ObjectiveSprites/gathererWood.png</file>
+        <file>ObjectiveSprites/hunter.png</file>
+        <file>ObjectiveSprites/rip.png</file>
+        <file>ObjectiveSprites/treeObjective.png</file>
+        <file>ObjectiveSprites/treeObjective2.png</file>
+        <file>ObjectiveSprites/treeObjective3.png</file>
+        <file>ObjectiveSprites/BonfireFrames/0.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/1.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/2.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/3.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/4.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/5.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/6.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/7.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/8.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/9.gif</file>
+        <file>ObjectiveSprites/BonfireFrames/10.gif</file>
+        <file>MapTiles/darkGrass.png</file>
+        <file>MapTiles/deepWater.png</file>
+        <file>MapTiles/grass.png</file>
+        <file>MapTiles/outOfMap.png</file>
+        <file>MapTiles/sand.png</file>
+        <file>MapTiles/stone.png</file>
+        <file>MapTiles/water.png</file>
+        <file>ObjectiveSprites/eater.png</file>
+    </qresource>
+</RCC>

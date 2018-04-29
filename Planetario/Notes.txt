@@ -1,0 +1,15 @@
+Current Goals:
+    1. Implement Model
+    2. Implement AI
+
+Future Tasks:
+    1. Refactor
+
+Refactoring:
+    1. Rewrite Person
+
+    2. TimeManager
+        - Separate daytime manager and update manager.
+    3. Specialization
+        - Move `QPixmap *getSprite()` from specialization to another
+          entity using new method `SpecializationType getType()`
