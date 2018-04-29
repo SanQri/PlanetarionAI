@@ -7,6 +7,8 @@ class WaterResource : public Resource
 {
 public:
     WaterResource(double mass);
+    ResourceType getType() override;
+    bool canBeUsed() override;
 };
 
 #endif // WATERRESOURCE_H

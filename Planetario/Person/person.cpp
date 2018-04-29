@@ -146,8 +146,8 @@ QPixmap *Person::getPixmap() {
     return specialization->getSprite();
 }
 
-void Person::consumeFoodResource(FoodResource *foodResource) {
-    double newStarvation = stats->getStarvation() - foodResource->getCaloricity() / 2000.0;
+void Person::consumeFoodResource(double caloricity) {
+    double newStarvation = stats->getStarvation() - caloricity / 2000.0;
     if (newStarvation < 0) {
         newStarvation = 0;
     }

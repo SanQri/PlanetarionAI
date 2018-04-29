@@ -25,20 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    person.cpp \
-    diamonsquaregenerator.cpp \
-    tribe.cpp \
-    position.cpp \
-    cell.cpp \
-    map.cpp \
-    camera.cpp \
+#    person.cpp \
+#    diamonsquaregenerator.cpp \
+#    position.cpp \
+#    cell.cpp \
+#    map.cpp \
+#    camera.cpp \
     renderer.cpp \
-    maptilemanager.cpp \
     Specializations/specialization.cpp \
     Objectives/bonfire.cpp \
     Objectives/pointobject.cpp \
     Objectives/treeobjective.cpp \
-    bounds.cpp \
+#    bounds.cpp \
     mousetrackingwidget.cpp \
     timemanager.cpp \
     Specializations/foodgatherer.cpp \
@@ -47,32 +45,40 @@ SOURCES += main.cpp\
     Resources/resource.cpp \
     Resources/foodresource.cpp \
     Resources/fruit.cpp \
-    personstats.cpp \
-    persontransportationmanager.cpp \
+#    personstats.cpp \
+#    persontransportationmanager.cpp \
     timestamp.cpp \
     task.cpp \
-    personmovementmanager.cpp \
+#    personmovementmanager.cpp \
     Specializations/eater.cpp \
-    Resources/waterresource.cpp
+    Resources/waterresource.cpp \
+    Model/bounds.cpp \
+    Model/cell.cpp \
+    Model/diamonsquaregenerator.cpp \
+    Model/map.cpp \
+    Model/position.cpp \
+    Person/person.cpp \
+    Person/personmovementmanager.cpp \
+    Person/personstats.cpp \
+    Person/persontransportationmanager.cpp \
+    Visuals/camera.cpp
 
 HEADERS  += \
     mainwindow.h \
-    person.h \
-    diamonsquaregenerator.h \
-    tribe.h \
-    position.h \
-    cell.h \
-    map.h \
-    camera.h \
+#    person.h \
+#    diamonsquaregenerator.h \
+#    position.h \
+#    cell.h \
+#    map.h \
+#    camera.h \
     renderer.h \
-    maptilemanager.h \
     Specializations/specialization.h \
     Objectives/bonfire.h \
     Objectives/pointobject.h \
     Objectives/treeobjective.h \
-    bounds.h \
+#    bounds.h \
     mousetrackingwidget.h \
-    changeable.h \
+#    changeable.h \
     timemanager.h \
     Specializations/foodgatherer.h \
     Specializations/woodgatherer.h \
@@ -84,9 +90,20 @@ HEADERS  += \
     persontransportationmanager.h \
     timestamp.h \
     task.h \
-    personmovementmanager.h \
+#    personmovementmanager.h \
     Specializations/eater.h \
-    Resources/waterresource.h
+    Resources/waterresource.h \
+    Model/bounds.h \
+    Model/cell.h \
+    Model/changeable.h \
+    Model/diamonsquaregenerator.h \
+    Model/map.h \
+    Model/position.h \
+    Person/person.h \
+    Person/personmovementmanager.h \
+    Person/personstats.h \
+    Person/persontransportationmanager.h \
+    Visuals/camera.h
 
 FORMS    += mainwindow.ui
 

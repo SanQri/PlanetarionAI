@@ -1,14 +1,16 @@
 #include "mainwindow.h"
 
+#include <thread>
+
 #include <QtWidgets>
 #include <QMouseEvent>
 #include <QTimer>
 
 #include "timemanager.h"
-#include "diamonsquaregenerator.h"
+#include "Model/diamonsquaregenerator.h"
 #include "math.h"
-#include "camera.h"
-#include "position.h"
+#include "Visuals/camera.h"
+#include "Model/position.h"
 
 MainWindow::MainWindow() : QMainWindow()
 {
@@ -25,35 +27,44 @@ MainWindow::MainWindow() : QMainWindow()
     TimeManager::shared()->add(this);
     TimeManager::shared()->add(camera);
 
-    mouseTrackingWidget = new MouseTrackingWidget(this);
+    mouseTrackingWidget = new MouseTrackingWidget(this, this);
     mouseTrackingWidget->setGeometry(0, 0, width(), height());
-    mouseTrackingWidget->window = this;
     mouseTrackingWidget->show();
 
-    drawing = false;
+    newImageIsReady = true;
+    redrawScene();
 }
 
 void MainWindow::redrawScene() {
-    if (drawing) {
-        return;
-    }
-    drawing = true;
-    if (camLabel != nullptr) {
-        delete camImage;
-        delete camLabel;
-    }
+    if (newImageIsReady) {
+        newImageIsReady = false;
 
-    camImage = camera->renderImageOfSize(width(), height());
+        if (camImage) {
+            if (camLabel) {
+                delete camLabel;
+            }
+            camLabel = new QLabel(this);
+            if (camLabel) {
+                camLabel->setGeometry(0, 0, width(), height());
+                camLabel->setPixmap(*camImage);
+                camLabel->setWindowFlags(Qt::WindowStaysOnBottomHint);
+                setCentralWidget(camLabel);
+            }
+        }
 
-    camLabel = new QLabel(this);
-    camLabel->setGeometry(0, 0, width(), height());
-    camLabel->setPixmap(*camImage);
-    camLabel->setWindowFlags(Qt::WindowStaysOnBottomHint);
-    setCentralWidget(camLabel);
-    drawing = false;
+        std::thread t([&]{
+            QPixmap *pixmap = camera->renderImageOfSize(width(), height());
+            if (camImage) {
+                delete camImage;
+            }
+            camImage = pixmap;
+            newImageIsReady = true;
+        });
+        t.detach();
+    }
 }
 
-void MainWindow::mouseMovedTo(float x, float y) {
+void MainWindow::mouseMovedTo(double x, double y) {
     float cameraSpeed = 0.02 * camera->getVerticalSize();
     float padding = 20;
 

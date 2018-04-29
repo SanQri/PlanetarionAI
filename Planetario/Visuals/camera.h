@@ -1,11 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "position.h"
+#include "Model/position.h"
 #include "mainwindow.h"
 #include "renderer.h"
-#include "map.h"
-#include "changeable.h"
+#include "Model/map.h"
+#include "Model/changeable.h"
 
 class Camera: public Renderer, public Changeable
 {

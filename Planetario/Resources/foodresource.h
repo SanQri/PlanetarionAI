@@ -3,6 +3,9 @@
 
 #include "resource.h"
 
+// will be extended by implementing caloricity/mass
+// and volume/mass densities
+
 class FoodResource : public Resource
 {
 protected:
@@ -12,6 +15,8 @@ public:
     double getCaloricity();
     FoodResource(double mass, double volume, double caloricity);
     FoodResource(double mass);
+    void add(Resource *resource) override;
+    bool remove(double caloricity);
 };
 
 #endif // FOODRESOURCE_H

@@ -1,14 +1,14 @@
 #include "mousetrackingwidget.h"
 
-MouseTrackingWidget::MouseTrackingWidget(QWidget *parent) : QWidget(parent)
+MouseTrackingWidget::MouseTrackingWidget(QWidget *parent, MouseTrackingWidgetListener *listener) : QWidget(parent)
 {
-    window = nullptr;
+    this->listener = listener;
     setMouseTracking(true);
 }
 
 void MouseTrackingWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (window != nullptr) {
-        window->mouseMovedTo(event->localPos().x(), event->localPos().y());
+    if (listener != nullptr) {
+        listener->mouseMovedTo((double)event->localPos().x(), (double)event->localPos().y());
     }
 }
 

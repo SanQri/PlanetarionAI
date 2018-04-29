@@ -1,16 +1,20 @@
 #include "persontransportationmanager.h"
 #include <typeinfo>
 
+#include "Resources/fruit.h"
+
 PersonTransportationManager::PersonTransportationManager(Person *person) {
     this->person = person;
+    food = new Fruit(0);
+    water = new WaterResource(0);
 }
 
 double PersonTransportationManager::volumeLimit() {
-    return 10;
+    return 10000;
 }
 
 double PersonTransportationManager::massLimit() {
-    return 10;
+    return 10000;
 }
 
 bool PersonTransportationManager::take(Resource *resource) {
@@ -24,16 +28,13 @@ bool PersonTransportationManager::take(Resource *resource) {
         currentMass = newMass;
         currentVolume = newVolume;
 
-        resources.insert(resource);
+//        resources.insert(resource);
 
-        FoodResource *asFood = dynamic_cast<FoodResource *>(resource);
-        WaterResource *asWater = dynamic_cast<WaterResource *>(resource);
+//        FoodResource *asFood = dynamic_cast<FoodResource *>(resource);
+//        WaterResource *asWater = dynamic_cast<WaterResource *>(resource);
 
-        if (asFood) {
-            food.insert(asFood);
-        } else if (asWater) {
-            water.insert(asWater);
-        }
+        food->add(resource);
+        water->add(resource);
 
         return true;
     }
@@ -49,23 +50,22 @@ void PersonTransportationManager::put(Resource *resource) {
         if (currentVolume < 0)
             currentVolume = 0;
         resources.erase(resource);
-        food.erase((FoodResource *)resource);
-        water.erase((WaterResource *)resource);
     }
 }
 
 bool PersonTransportationManager::hasFood() {
-    return !food.empty();
+    return food->getMass() > 50;
 }
 
 bool PersonTransportationManager::hasWater() {
-    return !water.empty();
+    return water->getMass() > 50;
 }
 
 void PersonTransportationManager::consumeFood() {
-    if (hasFood()) {
-        FoodResource *pieceOfFood = *food.begin();
-        put(pieceOfFood);
-        person->consumeFoodResource(pieceOfFood);
+    if(food->getMass()) {
+        double caloricity = std::min(food->getCaloricity(), 50.0);
+        if (food->remove(caloricity)) {
+            person->consumeFoodResource(caloricity);
+        }
     }
 }

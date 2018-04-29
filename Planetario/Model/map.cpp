@@ -9,7 +9,7 @@
 #include "Objectives/treeobjective.h"
 #include "Objectives/bonfire.h"
 #include "bounds.h"
-#include "person.h"
+#include "Person/person.h"
 
 Map::Map() {
     for (int i = 0; i < SIZE_OF_MAP; i++)
@@ -85,9 +85,6 @@ void Map::generate() {
         int y = rand() % SIZE_OF_MAP;
         person->setPosition(new Position(x, y));
         person->moveToNearestTree();
-//        int x1 = rand() % SIZE_OF_MAP;
-//        int y1 = rand() % SIZE_OF_MAP;
-//        person->moveToPoint(new Position(x1, y1));
         TimeManager::shared()->add(person);
         dynamicObjectives.push_back(person);
     }

@@ -3,31 +3,33 @@
 
 #include <QtWidgets>
 #include "mousetrackingwidget.h"
-#include "changeable.h"
+#include "Model/changeable.h"
 
 class Camera;
 class Map;
-class MouseTrackingWidget;
 
-class MainWindow : public QMainWindow, public Changeable
+class MainWindow : public QMainWindow, public Changeable, public MouseTrackingWidgetListener
 {
     Q_OBJECT
 private:
-    bool drawing;
+    bool newImageIsReady;
 
-public:
-    MainWindow();
     QPixmap *camImage;
+    QPixmap *newCamImage;
     QPixmap *previousCamImage;
     QLabel *camLabel;
     Camera *camera;
     Map *map;
     MouseTrackingWidget *mouseTrackingWidget;
+
     void redraw();
-    void mouseMovedTo(float x, float y);
+    void redrawScene();
+
+public:
+    MainWindow();
     void updateWithTimer(QTimer *timer) override;
     void wheelEvent(QWheelEvent *event) override;
-    void redrawScene();
+    void mouseMovedTo(double x, double y) override;
 
 };
 

@@ -1,6 +1,6 @@
 #include "camera.h"
 #include "math.h"
-#include "cell.h"
+#include "Model/cell.h"
 #include "vector"
 #include <QTimer>
 

@@ -9,13 +9,15 @@
 
 class Person;
 
+// curently inconsistent
+
 class PersonTransportationManager
 {
 private:
     Person *person;
     std::set<Resource *> resources;
-    std::set<FoodResource *> food;
-    std::set<WaterResource *> water;
+    FoodResource *food;
+    WaterResource *water;
 
 public:
     double currentVolume;

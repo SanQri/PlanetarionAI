@@ -5,7 +5,7 @@
 
 #include <set>
 
-#include "changeable.h"
+#include "Model/changeable.h"
 
 const int TICKS_PER_DAY = 240;
 const double SECONDS_PER_TICK = 360.0;

@@ -8,9 +8,9 @@
 #include "Resources/foodresource.h"
 
 #include "Objectives/pointobject.h"
-#include "map.h"
-#include "personstats.h"
-#include "persontransportationmanager.h"
+#include "Model/map.h"
+#include "Person/personstats.h"
+#include "Person/persontransportationmanager.h"
 
 class PersonTransportationManager;
 class Specialization;
@@ -54,7 +54,7 @@ public:
     void moveToNearestTree();
     bool atAnchorPoint();
 
-    void consumeFoodResource(FoodResource *foodResource);
+    void consumeFoodResource(double caloricity);
 
     // MARK: Getters and Setters
 };

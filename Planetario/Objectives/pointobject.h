@@ -2,8 +2,8 @@
 #define POINTOBJECT_H
 
 #include "QPixmap.h"
-#include "position.h"
-#include "changeable.h"
+#include "Model/position.h"
+#include "Model/changeable.h"
 
 class PointObject : public Changeable
 {

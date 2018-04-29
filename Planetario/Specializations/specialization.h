@@ -3,7 +3,7 @@
 
 #include <QPixmap>
 
-#include "person.h"
+#include "Person/person.h"
 class Person;
 
 enum SpecializationType {
