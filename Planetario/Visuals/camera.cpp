@@ -3,6 +3,7 @@
 #include "Model/cell.h"
 #include "vector"
 #include <QTimer>
+#include "timemanager.h"
 
 Camera::Camera(Map *map, float x, float y) {
     Camera(map, new Position(x, y));
@@ -18,6 +19,7 @@ Camera::Camera(Map *map, Position *position) {
             tilesForScalesCalculated[i][j] = false;
         }
     }
+    TimeManager::shared()->add(this);
 }
 
 QPixmap *Camera::renderImageOfSize(int w, int h) {

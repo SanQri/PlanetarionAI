@@ -5,10 +5,11 @@
 TimeManager::TimeManager() {
     timer = new QTimer();
 
-    timer->setInterval(18);
+    timer->setInterval(16);
     day = 0;
     dayTime = 0;
     QObject::connect( timer, SIGNAL(timeout()), this, SLOT(update()) );
+    currentDate = new TimeStamp(0, 0);
     timer->start();
 }
 
@@ -37,6 +38,10 @@ void TimeManager::update() {
         day++;
         dayTime = 0;
     }
+
+    delete currentDate;
+    currentDate = new TimeStamp(day, dayTime);
+
     for (Changeable *unsub : unsubs) {
         changables.erase(unsub);
     }
@@ -53,6 +58,10 @@ double TimeManager::getDayTime() {
 
 int TimeManager::getDay() {
     return day;
+}
+
+TimeStamp *TimeManager::getCurrentTime() {
+    return currentDate;
 }
 
 double TimeManager::getBrightness() {

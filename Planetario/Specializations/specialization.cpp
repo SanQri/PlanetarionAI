@@ -13,6 +13,10 @@ void Specialization::readyToWork() {
 
 }
 
+bool Specialization::canBeIntercepted() {
+    return true;
+}
+
 SpecializationType Specialization::getType() {
     return SpecializationType::FoodGathererType;
 }

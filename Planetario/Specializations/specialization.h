@@ -10,6 +10,7 @@ enum SpecializationType {
     WoodGathererType,
     MixedGathererType,
     FoodGathererType,
+    SleeperType,
     EaterType
 };
 
@@ -23,6 +24,7 @@ public:
     virtual void work() = 0;
     virtual QPixmap *getSprite() = 0;
     virtual void readyToWork();
+    virtual bool canBeIntercepted();
     virtual SpecializationType getType();
 };
 

@@ -29,5 +29,6 @@
         <file>MapTiles/stone.png</file>
         <file>MapTiles/water.png</file>
         <file>ObjectiveSprites/eater.png</file>
+        <file>ObjectiveSprites/sleeper.png</file>
     </qresource>
 </RCC>

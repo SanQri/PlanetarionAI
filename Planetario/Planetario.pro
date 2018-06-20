@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     Person/personmovementmanager.cpp \
     Person/personstats.cpp \
     Person/persontransportationmanager.cpp \
-    Visuals/camera.cpp
+    Visuals/camera.cpp \
+    Specializations/sleeper.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -103,7 +104,8 @@ HEADERS  += \
     Person/personmovementmanager.h \
     Person/personstats.h \
     Person/persontransportationmanager.h \
-    Visuals/camera.h
+    Visuals/camera.h \
+    Specializations/sleeper.h
 
 FORMS    += mainwindow.ui
 

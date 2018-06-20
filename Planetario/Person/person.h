@@ -55,8 +55,6 @@ public:
     bool atAnchorPoint();
 
     void consumeFoodResource(double caloricity);
-
-    // MARK: Getters and Setters
 };
 
 #endif // PERSON_H

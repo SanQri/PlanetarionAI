@@ -79,7 +79,7 @@ void Map::generate() {
 
 
 
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 1; i++) {
         Person *person = new Person(this);
         int x = rand() % SIZE_OF_MAP;
         int y = rand() % SIZE_OF_MAP;
@@ -105,6 +105,7 @@ CellType Map::getTypeOfCellAt(int x, int y) {
 }
 
 // To be optimized
+// Concider using quadtree
 std::vector<PointObject *>Map:: objectivesAtBounds(int x1, int y1, int x2, int y2) {
     std::vector<PointObject *>result;
 

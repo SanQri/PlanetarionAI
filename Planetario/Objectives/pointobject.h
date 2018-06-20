@@ -12,7 +12,7 @@ protected:
 public:
     Position *getPosition();
     void setPosition(Position *position);
-    virtual QPixmap *getPixmap();
+    virtual QPixmap *getPixmap() = 0;
     virtual void updateWithTimer(QTimer *timer) override;
     PointObject();
 };

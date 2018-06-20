@@ -7,7 +7,6 @@
 #include <QTimer>
 
 #include "timemanager.h"
-#include "Model/diamonsquaregenerator.h"
 #include "math.h"
 #include "Visuals/camera.h"
 #include "Model/position.h"
@@ -20,12 +19,11 @@ MainWindow::MainWindow() : QMainWindow()
 
     map = new Map();
     map->generate();
-    camera = new Camera(map, new Position(10.41, 20.76));
+    camera = new Camera(map, new Position(10.41, 120.76));
 
     camImage = nullptr;
 
     TimeManager::shared()->add(this);
-    TimeManager::shared()->add(camera);
 
     mouseTrackingWidget = new MouseTrackingWidget(this, this);
     mouseTrackingWidget->setGeometry(0, 0, width(), height());

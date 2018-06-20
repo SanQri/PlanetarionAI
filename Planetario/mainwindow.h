@@ -4,6 +4,7 @@
 #include <QtWidgets>
 #include "mousetrackingwidget.h"
 #include "Model/changeable.h"
+#include "renderer.h"
 
 class Camera;
 class Map;
@@ -18,7 +19,7 @@ private:
     QPixmap *newCamImage;
     QPixmap *previousCamImage;
     QLabel *camLabel;
-    Camera *camera;
+    CameraProtocol *camera;
     Map *map;
     MouseTrackingWidget *mouseTrackingWidget;
 

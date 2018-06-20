@@ -7,7 +7,7 @@
 #include "Model/map.h"
 #include "Model/changeable.h"
 
-class Camera: public Renderer, public Changeable
+class Camera: public CameraProtocol, public Changeable
 {
     Q_OBJECT
 
@@ -24,13 +24,13 @@ public:
     QPixmap pixmapForCellType(CellType cellType);
     QPixmap *renderImageOfSize(int w, int h) override;
     Position *getPosition();
-    Position *getAnchorPosition();
+    Position *getAnchorPosition() override;
     void setPosition(float x, float y);
     void setPosition(Position *p);
-    void setAnchorPosition(Position *p);
-    void setVerticalSize(float size);
+    void setAnchorPosition(Position *p) override;
+    void setVerticalSize(float size) override;
     void updateWithTimer(QTimer *timer) override;
-    float getVerticalSize();
+    float getVerticalSize() override;
     Camera(Map *map, float x, float y);
     Camera(Map *map, Position *position);
 };

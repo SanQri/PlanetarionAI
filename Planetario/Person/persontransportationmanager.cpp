@@ -28,11 +28,6 @@ bool PersonTransportationManager::take(Resource *resource) {
         currentMass = newMass;
         currentVolume = newVolume;
 
-//        resources.insert(resource);
-
-//        FoodResource *asFood = dynamic_cast<FoodResource *>(resource);
-//        WaterResource *asWater = dynamic_cast<WaterResource *>(resource);
-
         food->add(resource);
         water->add(resource);
 
@@ -54,16 +49,18 @@ void PersonTransportationManager::put(Resource *resource) {
 }
 
 bool PersonTransportationManager::hasFood() {
-    return food->getMass() > 50;
+    return food->getMass() > 100;
 }
 
 bool PersonTransportationManager::hasWater() {
-    return water->getMass() > 50;
+    return water->getMass() > 100;
 }
 
 void PersonTransportationManager::consumeFood() {
     if(food->getMass()) {
-        double caloricity = std::min(food->getCaloricity(), 50.0);
+        double caloricity = std::min(food->getCaloricity(), 120.0);
+        currentMass -= caloricity * 0.5;
+        currentVolume -= caloricity * 0.6;
         if (food->remove(caloricity)) {
             person->consumeFoodResource(caloricity);
         }

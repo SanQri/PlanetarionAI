@@ -8,6 +8,7 @@
 #include "Specializations/mixedgatherer.h"
 #include "Specializations/woodgatherer.h"
 #include "Specializations/eater.h"
+#include "Specializations/sleeper.h"
 
 class Eater;
 class FoodGatherer;
@@ -15,12 +16,12 @@ class MixedGatherer;
 class WoodGatherer;
 
 Person::Person(Map *map) {
-    this->stats = new PersonStats();
-    this->transportationManager = new PersonTransportationManager(this);
+    stats = new PersonStats();
+    transportationManager = new PersonTransportationManager(this);
     this->map = map;
     isDead = false;
     stats->setAgility(2);
-    this->specialization = new FoodGatherer(this);
+    specialization = new FoodGatherer(this);
     workState = WorkState::JustChanged;
 }
 
@@ -73,19 +74,23 @@ void Person::updateWithTimer(QTimer *timer) {
 }
 
 void Person::desideWhatToDo() {
-    Specialization *newSpecialization = nullptr;
-    if (stats->getStarvation() > 0.3 && transportationManager->hasFood()) {
-        newSpecialization = new Eater(this);
-    } else {
-        newSpecialization = new FoodGatherer(this);
-    }
+    if (specialization->canBeIntercepted()) {
+        Specialization *newSpecialization = nullptr;
+        if (stats->getDrowsiness() > 0.7) {
+            newSpecialization = new Sleeper(this);
+        } else if (stats->getStarvation() > 0.3 && transportationManager->hasFood()) {
+            newSpecialization = new Eater(this);
+        } else {
+            newSpecialization = new FoodGatherer(this);
+        }
 
-    if (specialization->getType() != newSpecialization->getType()) {
-        delete specialization;
-        specialization = newSpecialization;
-        workState = WorkState::JustChanged;
-    } else {
-        delete newSpecialization;
+        if (specialization->getType() != newSpecialization->getType()) {
+            delete specialization;
+            specialization = newSpecialization;
+            workState = WorkState::JustChanged;
+        } else {
+            delete newSpecialization;
+        }
     }
 
     specialization->work();
@@ -115,8 +120,10 @@ void Person::updatePosition() {
 }
 
 void Person::updateStats() {
-    stats->setDrowsiness(stats->getDrowsiness() + 1.0 / TICKS_PER_DAY);
-    stats->setStarvation(stats->getStarvation() + 1.0 / TICKS_PER_DAY);
+    if (specialization->getType() != SpecializationType::SleeperType)
+        stats->setDrowsiness(stats->getDrowsiness() + 1.0 / TICKS_PER_DAY);
+    if (specialization->getType() != SpecializationType::EaterType)
+        stats->setStarvation(stats->getStarvation() + 1.0 / TICKS_PER_DAY);
 //    stats->setThurst(stats->getThurst() + 1.0 / TICKS_PER_DAY);
     // If person has not eaten for 4 days or has not drunk for 2 days, it dies
     if (stats->getStarvation() > 4 || stats->getThurst() > 2) {

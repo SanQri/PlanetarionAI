@@ -6,6 +6,7 @@
 #include <set>
 
 #include "Model/changeable.h"
+#include "timestamp.h"
 
 const int TICKS_PER_DAY = 240;
 const double SECONDS_PER_TICK = 360.0;
@@ -16,6 +17,7 @@ class TimeManager : public QObject
 private:
     std::set<Changeable *> changables;
     std::set<Changeable *> unsubs;
+    TimeStamp *currentDate;
     QTimer *timer;
     int day;
     double dayTime;
@@ -30,6 +32,7 @@ public:
     double getDayTime();
     int getDay();
     double getBrightness();
+    TimeStamp *getCurrentTime();
 private slots:
     void update();
 };
